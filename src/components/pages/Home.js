@@ -1,7 +1,14 @@
+import React, {Fragment} from 'react';
 
+import './Home.css'
 const Home = () => {
     return (
-        <div>Welcome To Expense tracker</div>
+        <Fragment>
+        <div>
+            <div>welcome To Expense Tracker</div>
+            <div>You Profile Is incomplete. Complete Now</div>
+        </div>
+        </Fragment>
     )
 }
 export default Home;

@@ -5,6 +5,7 @@ import './App.css';
 import SignUp from './components/pages/SignUp';
 import Home from './components/pages/Home';
 import Login from './components/pages/Login';
+import UpdateProfile from './components/pages/UpdateProfile';
 
 function App() {
   return (
@@ -18,6 +19,9 @@ function App() {
        </Route>
        <Route path='/login'>
        <Login />
+       </Route>
+       <Route path='/updateProfile'>
+       <UpdateProfile />
        </Route>
        </Switch>
       

@@ -30,7 +30,7 @@ if(enteredEmail && enteredPassword && enteredCpassword && enteredPassword === en
           })
           .then( res => {
             if(res.ok) {
-              res.json().then(data => {console.log(data.idToken)})
+              res.json().then(data => {localStorage.setItem('token',data.idToken)})
               console.log('Succesfully SignedUp!!')
             } else {
               return res.json().then(data => {
@@ -71,3 +71,5 @@ if(enteredEmail && enteredPassword && enteredCpassword && enteredPassword === en
   );
 };
 export default SignUp;
+
+localStorage.removeItem('tokonID')
