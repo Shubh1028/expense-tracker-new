@@ -63,11 +63,9 @@ if(enteredEmail && enteredPassword && enteredCpassword && enteredPassword === en
         <input type='password' id='cpassword' placeholder="Confirm Your Password" ref={fetchCpasswordRef}/>
     </div>
     <button type='submit'>Submit</button>
-   </form>
-   <div className='login-redirect'>
     <p>Have an account ? Login</p>
-
-   </div>
+   </form>
+   
    </Fragment>
   );
 };
