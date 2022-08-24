@@ -28,6 +28,7 @@ if(enteredEmail && enteredPassword) {
           })
           .then( res => {
             if(res.ok) {
+              res.json().then(data => {localStorage.setItem('token',data.idToken)})
                 history.replace('/home')
               
               console.log('LoggedIn!!')
