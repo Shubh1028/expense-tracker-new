@@ -67,6 +67,28 @@ if(enteredName && enteredPhoto) {
       )
 
     }, [])
+
+    const verifyEmailHandler = () => {
+      fetch('https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyAdJZauQNFCHPG1PLjvZcjucdQn4HiktL0', {
+          method: 'POST',
+          body: JSON.stringify({
+              requestType: "VERIFY_EMAIL",
+              idToken: localStorage.getItem('token')
+          }),
+          headers:{ 
+              'Content-Type': 'application/json'
+           }
+      })
+      .then((res) => {
+          if(res.ok) {
+          res.json().then(data => alert('Verification Link Sent'))
+          } else {
+              res.json().then(data => {
+                  alert(data.error.message);
+                });
+          }
+      })
+  }
   
   return (
    <form className="contact-form" onSubmit={updateFormHandler}>
@@ -79,7 +101,9 @@ if(enteredName && enteredPhoto) {
         <label htmlFor="photo">Profile Photo URL</label><br/>
         <input type='text' id='photo' placeholder="Enter Your URL" defaultValue={imageURL} ref={fetchPhotoRef}/>
     </div>
-    <button type='submit'>Update</button>
+   
+    <button onClick={verifyEmailHandler}>Verify Email</button>
+    <button type='submit'>Update Profile</button>
    </form>
    
   );

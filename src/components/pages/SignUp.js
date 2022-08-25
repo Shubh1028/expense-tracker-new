@@ -72,4 +72,4 @@ if(enteredEmail && enteredPassword && enteredCpassword && enteredPassword === en
 };
 export default SignUp;
 
-localStorage.removeItem('tokonID')
+
