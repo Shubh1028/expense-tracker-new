@@ -3,3 +3,8 @@
     justify-content: space-between;
     padding: 1rem;
 }
+.logout-button{
+    /* float: right; */
+    margin: 1rem;
+    
+}

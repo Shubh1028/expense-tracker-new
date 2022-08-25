@@ -1,8 +1,9 @@
 import React, {Fragment} from 'react';
-import {NavLink} from 'react-router-dom';
+import {NavLink, useHistory} from 'react-router-dom';
 
 import './Home.css'
 const Home = () => {
+    const history = useHistory();
     const verifyEmailHandler = () => {
         fetch('https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyAdJZauQNFCHPG1PLjvZcjucdQn4HiktL0', {
             method: 'POST',
@@ -23,10 +24,14 @@ const Home = () => {
                   });
             }
         })
-
+    }
+    const logoutHandler = () => {
+        localStorage.removeItem('token')
+        history.replace('/login')
     }
     return (
         <Fragment>
+            <div className='logout-button'><button onClick={logoutHandler}>Logout</button></div>
         <div className='home-container'>
             <div>welcome To Expense Tracker</div>
             <div>You Profile Is incomplete. <NavLink to='./updateProfile'>Complete Now</NavLink></div>
