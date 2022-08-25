@@ -11,6 +11,9 @@ function App() {
   return (
     <Fragment>
       <Switch>
+        <Route path='/' exact>
+          <Login/>
+        </Route>
       <Route path='/signup'>
           <SignUp />
       </Route>
@@ -24,8 +27,6 @@ function App() {
        <UpdateProfile />
        </Route>
        </Switch>
-      
-
     </Fragment>
    
   );
