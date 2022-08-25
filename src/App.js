@@ -6,6 +6,7 @@ import SignUp from './components/pages/SignUp';
 import Home from './components/pages/Home';
 import Login from './components/pages/Login';
 import UpdateProfile from './components/pages/UpdateProfile';
+import ResetPassword from './components/pages/ResetPassword';
 
 function App() {
   return (
@@ -25,6 +26,9 @@ function App() {
        </Route>
        <Route path='/updateProfile'>
        <UpdateProfile />
+       </Route>
+       <Route path='/resetPass'>
+       <ResetPassword />
        </Route>
        </Switch>
     </Fragment>

@@ -58,6 +58,7 @@ if(enteredEmail && enteredPassword) {
     </div>
     <button type='submit'>Submit</button>
     <p>Not Have an Account ? <NavLink to='/signup'>SignUp</NavLink></p>
+    <p>Forgot Password ? <NavLink to='/resetPass'>Reset Password</NavLink></p>
    </form>
    
   );
