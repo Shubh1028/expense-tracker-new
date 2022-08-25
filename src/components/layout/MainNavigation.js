@@ -31,9 +31,9 @@ const MainNavigation = () => {
                     {!isLoggedin && <li>
                        <NavLink className="a-link"  to="/signUp">Sign Up</NavLink>
                     </li>  }
-                     <li>
+                    {!isLoggedin && <li>
                         <NavLink className="a-link"  to="/login">Login</NavLink>
-                    </li>
+                    </li> }
                 {isLoggedin &&  <li>
                         <span className="a-link" onClick={logoutHandler}>Logout</span>
                     </li> }

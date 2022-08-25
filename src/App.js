@@ -8,7 +8,6 @@ import Home from './components/pages/Home';
 import Login from './components/pages/Login';
 import UpdateProfile from './components/pages/UpdateProfile';
 import ResetPassword from './components/pages/ResetPassword';
-import AddExpense from './components/pages/AddExpense';
 
 function App() {
   let isLoggedin = localStorage.getItem('token')
@@ -33,9 +32,6 @@ function App() {
        </Route>
        <Route path='/resetPass'>
        <ResetPassword />
-       </Route>
-       <Route path='/addExpense'>
-       <AddExpense />
        </Route>
        </Switch>
     </Fragment>
