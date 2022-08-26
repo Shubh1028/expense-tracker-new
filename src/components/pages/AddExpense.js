@@ -1,11 +1,14 @@
-import React, {Fragment, useRef} from 'react'
+import React, {Fragment, useRef, useState} from 'react'
 import styles from"./AddExpense.module.css";
-// import AuthContext from '../Store/auth-context';
+import ExpenseAdded from './ExpenseAdded';
+
 
 const AddExpense = () => {
     const amountRef = useRef();
     const descriptionRef = useRef();
     const categoryRef = useRef();
+
+    const[item, getDetail] = useState([]);
 
     const addExpenseHandler = (e) => {
         e.preventDefault();
@@ -15,13 +18,18 @@ const AddExpense = () => {
 
         const details = {
             amount: enteredAmount,
-            categoy: selectedCategory,
+            category: selectedCategory,
             description: enteredDescription
         }
-        console.log(details)
+        getDetail([...item, details])
+
+        amountRef.current.value = ''
+        categoryRef.current.value = ''
+        descriptionRef.current.value = ''
+        
+
     }
-   
-  
+
   return (
     <Fragment>
    <form className={styles.formContainer} onSubmit={addExpenseHandler}>
@@ -29,12 +37,12 @@ const AddExpense = () => {
     <div className={styles.addExpense}>
     <div>
         <label htmlFor="amount">Amount</label><br/>
-        <input type='number' id='amount' placeholder="Enter Your Amount" ref={amountRef}/>
+        <input type='number' id='amount'  placeholder="Enter Your Amount" ref={amountRef} required/>
     </div>
     
     <div>
         <label htmlFor="category">Category</label><br/>
-        <select id="category" ref={categoryRef}>
+        <select id="category" ref={categoryRef} required>
             <option value="">Select</option>
             <option value="food">Food</option>
             <option value="petrol">Petrol</option>
@@ -46,12 +54,12 @@ const AddExpense = () => {
     <br/>
     <div>
         <label htmlFor="description">Description</label><br/>
-        <textarea type='text' id='description' placeholder="Enter Description" rows={3} ref={descriptionRef}/>
+        <textarea type='text' id='description' placeholder="Enter Description" rows={3} ref={descriptionRef} required/>
     </div>
     <br/>
     <button type='submit'>Add Expense</button>
    </form>
-   
+   <ExpenseAdded items={item}/>
    </Fragment>
   );
 };
