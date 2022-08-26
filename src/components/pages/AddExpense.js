@@ -1,4 +1,4 @@
-import React, {Fragment, useRef, useState} from 'react'
+import React, {Fragment, useRef, useState, useEffect} from 'react'
 import styles from"./AddExpense.module.css";
 import ExpenseAdded from './ExpenseAdded';
 
@@ -10,11 +10,45 @@ const AddExpense = () => {
 
     const[item, getDetail] = useState([]);
 
-    const addExpenseHandler = (e) => {
+    let username = localStorage.getItem("email") || " ";
+    let t = "";
+    for (let i = 0; i < username.length; i++) {
+        if (username[i] === '.' || username[i] === '@') {
+            continue;
+        }
+        else {
+            t += username[i];
+        }
+    }
+    username = t;
+
+    useEffect(() => {
+        fetch(`https://expense-tracker-authentication-default-rtdb.firebaseio.com/expenseList/${username}.json`)
+        .then((res) => {
+            if (!res.ok) {
+                console.log("Something went wrong!");
+            }
+            else {
+                return res.json();
+            }
+        })
+        .then((data) => {
+            let localItem = [];
+            for (let [key, value] of Object.entries(data)) { 
+                localItem.push({ key, ...value });
+            }
+            getDetail(localItem)
+        })
+    },[])
+
+    
+
+    const addExpenseHandler = async (e) => {
         e.preventDefault();
         const enteredAmount = amountRef.current.value;
         const selectedCategory = categoryRef.current.value;
         const enteredDescription = descriptionRef.current.value;
+      
 
         const details = {
             amount: enteredAmount,
@@ -23,11 +57,17 @@ const AddExpense = () => {
         }
         getDetail([...item, details])
 
+       const res = await fetch(`https://expense-tracker-authentication-default-rtdb.firebaseio.com/expenseList/${username}.json`, {
+            method: "POST",
+            body: JSON.stringify(details)
+        });
+        if (res.ok) {
         amountRef.current.value = ''
         categoryRef.current.value = ''
         descriptionRef.current.value = ''
-        
-
+        } else {
+            console.log(res)
+        }
     }
 
   return (
@@ -44,10 +84,10 @@ const AddExpense = () => {
         <label htmlFor="category">Category</label><br/>
         <select id="category" ref={categoryRef} required>
             <option value="">Select</option>
-            <option value="food">Food</option>
-            <option value="petrol">Petrol</option>
-            <option value="salary">Salary</option>
-            <option value="medical">Medical</option>
+            <option value="Food">Food</option>
+            <option value="Petrol">Petrol</option>
+            <option value="Salary">Salary</option>
+            <option value="Medical">Medical</option>
         </select>
     </div>
     </div>
