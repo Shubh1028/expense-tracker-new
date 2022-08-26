@@ -23,6 +23,13 @@ td{
     box-sizing: border-box;
     border: 1px solid #16a34a;
 }
+.delete{
+    color: crimson;
+    cursor: pointer;
+}
+.edit{
+    cursor: pointer;
+}
 @media only screen and (max-width: 900px) {
     .tableContainer{
      width: 90%;

@@ -3,7 +3,7 @@ import styles from"./AddExpense.module.css";
 import ExpenseAdded from './ExpenseAdded';
 
 
-const AddExpense = () => {
+const AddExpense = (props) => {
     const amountRef = useRef();
     const descriptionRef = useRef();
     const categoryRef = useRef();
@@ -21,6 +21,43 @@ const AddExpense = () => {
         }
     }
     username = t;
+
+    const getId = (id, isEdit) => {
+
+        const toEdit = (item.find((expense) => expense.key === id));
+        if(isEdit) {
+        console.log(toEdit)
+        amountRef.current.value = toEdit.amount;
+        descriptionRef.current.value = toEdit.description;
+        categoryRef.current.value = toEdit.category;
+        }
+
+        let newArr = []
+
+         newArr  = item.filter((ite) => {
+            return ite !== toEdit
+        })
+        getDetail(newArr)
+
+        fetch(`https://expense-tracker-authentication-default-rtdb.firebaseio.com/expenseList/${username}/${id}.json`, {
+            method: "DELETE"
+        }).then((res) => {
+            if (res.ok) {
+                return res.json();
+                
+            }
+            else {
+                return res.json().then((data) => {
+                    throw new Error(data.error.message);
+                })
+            }
+        }).catch((err) => {
+            console.log(err.message);
+        })
+    }
+
+
+  
 
     useEffect(() => {
         fetch(`https://expense-tracker-authentication-default-rtdb.firebaseio.com/expenseList/${username}.json`)
@@ -99,7 +136,7 @@ const AddExpense = () => {
     <br/>
     <button type='submit'>Add Expense</button>
    </form>
-   <ExpenseAdded items={item}/>
+   <ExpenseAdded  items={item} getId={getId}/>
    </Fragment>
   );
 };
