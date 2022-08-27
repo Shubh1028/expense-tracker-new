@@ -1,14 +1,14 @@
 import React, {Fragment, useRef} from 'react'
 import "./SignUp.css";
 import {NavLink} from 'react-router-dom'
-// import AuthContext from '../Store/auth-context';
+
 
 const SignUp = () => {
     let fetchEmailRef = useRef();
     let fetchPasswordRef = useRef();
     let fetchCpasswordRef = useRef();
 
-    //  const authCtx = useContext(AuthContext)
+   
 
     const signupFormHandler = (e) => {
         e.preventDefault();
