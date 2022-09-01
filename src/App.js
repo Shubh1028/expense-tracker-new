@@ -8,11 +8,18 @@ import Home from './components/pages/Home';
 import Login from './components/pages/Login';
 import UpdateProfile from './components/pages/UpdateProfile';
 import ResetPassword from './components/pages/ResetPassword';
+import { useDispatch, useSelector } from "react-redux";
+import { themeActions } from './store/themeSlice'
+
 
 function App() {
+  const dispatch = useDispatch()
   let isLoggedin = localStorage.getItem('token')
+  // const isPremium = useSelector(state => state.theme.isActivated)
+  const bgColor = useSelector(state => state.theme.bgColor)
   return (
     <Fragment>
+      <div className={bgColor ? 'dark' : ''}>
       <MainNavigation/>
       <Switch>
         <Route path='/' exact>
@@ -34,6 +41,7 @@ function App() {
        <ResetPassword />
        </Route>
        </Switch>
+       </div>
     </Fragment>
    
   );

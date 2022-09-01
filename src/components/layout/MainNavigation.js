@@ -2,6 +2,8 @@ import { Fragment } from "react";
 import { NavLink, useHistory, } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../store/authSlice";
+import { ImContrast } from "react-icons/im";
+import { themeActions } from "../../store/themeSlice";
 
 
 import "./MainNavigation.css";
@@ -11,6 +13,8 @@ import "./MainNavigation.css";
 
 const MainNavigation = () => {
     const isAuth = useSelector(state => state.auth.isAuthenticated)
+    const isPremium = useSelector(state => state.theme.isActivated)
+   
     const dispatch =useDispatch();
 
     let isLoggedin = localStorage.getItem('token')
@@ -21,9 +25,14 @@ const MainNavigation = () => {
 
     const logoutHandler = () => {
         localStorage.removeItem('token')
+        localStorage.removeItem('email')
         history.replace('/login')
         window.location.reload()
         dispatch(authActions.logout());
+    }
+
+    const themeChange = () => {
+        dispatch(themeActions.changeTheme());
     }
    
     return (
@@ -46,6 +55,9 @@ const MainNavigation = () => {
                     </li> }
                 {isLoggedin &&  <li>
                         <span className="a-link" onClick={logoutHandler}>Logout</span>
+                    </li> }
+                    {isPremium && <li>
+                        <span className="a-link"  onClick = {themeChange}><ImContrast/></span>
                     </li> }
                 </ul>
             </div>

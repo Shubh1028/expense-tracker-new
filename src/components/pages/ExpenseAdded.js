@@ -2,12 +2,15 @@ import styles from './ExpenseAdded.module.css'
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { cartActions } from "../../store/cartSlice";
+// import { FcDownload } from "react-icons/fc";
+import DownloadCSV from "./DownloadCSV";
 
 
 const ExpenseAdded = (props) => {
 
     const dispatch = useDispatch();
     const item = useSelector(state => state.expense.items);
+    const isPremium = useSelector(state => state.theme.isActivated)
     console.log(item)
 
     const handleClick = (id , isEdit) => {
@@ -16,6 +19,7 @@ const ExpenseAdded = (props) => {
   
 
     return(<div className={styles.tableContainer}>
+       {isPremium && <div className={styles.download}><DownloadCSV data={item}/></div> }
        
       <table>
         <thead>
