@@ -12,12 +12,12 @@ const cartSlice = createSlice({
         },
         addExpense(state, action) {
             const key = action.payload.key;
-            const expense = action.payload.expense;
+            const amount = action.payload.amount;
             const description = action.payload.description;
             const category = action.payload.category;
             state.items.push({
                 key,
-                expense,
+                amount,
                 description,
                 category
             });

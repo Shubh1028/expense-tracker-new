@@ -3,17 +3,17 @@ import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { cartActions } from "../../store/cartSlice";
 
+
 const ExpenseAdded = (props) => {
 
     const dispatch = useDispatch();
+    const item = useSelector(state => state.expense.items);
+    console.log(item)
 
     const handleClick = (id , isEdit) => {
         props.getId(id , isEdit)
     }
-
   
- 
-    
 
     return(<div className={styles.tableContainer}>
        
@@ -28,9 +28,10 @@ const ExpenseAdded = (props) => {
             </tr>
         </thead>
         <tbody>
-        {props.items.map((expense) => (
+        {item.map((expense) => (
+          
         
-            <tr key={Math.random() * 10}>
+            <tr   key = {Math.random()*10}>
                 <td>{expense.amount}</td>
                 <td>{expense.category}</td>
                 <td>{expense.description}</td>

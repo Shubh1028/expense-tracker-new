@@ -11,7 +11,9 @@ const AddExpense = (props) => {
     const categoryRef = useRef();
     const dispatch = useDispatch();
 
-    const[item, getDetail] = useState([]);
+    // const[item, getDetail] = useState([]);
+    const ExpenseCount = useSelector((state) => state.expense.totalExpense)
+    const item = useSelector(state => state.expense.items);
 
     let username = localStorage.getItem("email") || " ";
     let t = "";
@@ -28,18 +30,19 @@ const AddExpense = (props) => {
     const getId = (id, isEdit) => {
 
         const toEdit = (item.find((expense) => expense.key === id));
+        console.log(id)
         if(isEdit) {
         amountRef.current.value = toEdit.amount;
         descriptionRef.current.value = toEdit.description;
         categoryRef.current.value = toEdit.category;
         }
 
-        let newArr = []
+        // let newArr = []
 
-         newArr  = item.filter((ite) => {
-            return ite !== toEdit
-        })
-        getDetail(newArr)
+        //  newArr  = item.filter((ite) => {
+        //     return ite !== toEdit
+        // })
+        // getDetail(newArr)
 
         fetch(`https://expense-tracker-authentication-default-rtdb.firebaseio.com/expenseList/${username}/${id}.json`, {
             method: "DELETE"
@@ -79,7 +82,7 @@ const AddExpense = (props) => {
                 localItem.push({ key, ...value });
                 localtotalExpense = localtotalExpense + (+value.amount);
             }
-            getDetail(localItem)
+            // getDetail(localItem)
             dispatch(cartActions.replaceExpense({
                 items: localItem || [],
                 totalExpense: localtotalExpense
@@ -87,9 +90,7 @@ const AddExpense = (props) => {
            
         })
     },[])
-    const count = useSelector(state => state.expense.totalExpense)
-
-    // console.log(count)     
+  
    
     
 
@@ -99,15 +100,13 @@ const AddExpense = (props) => {
         const enteredAmount = amountRef.current.value;
         const selectedCategory = categoryRef.current.value;
         const enteredDescription = descriptionRef.current.value;
-      
 
         const details = {
             amount: enteredAmount,
             category: selectedCategory,
             description: enteredDescription
         }
-        getDetail([...item, details])
-
+        // getDetail([...item, details])
        const res = await fetch(`https://expense-tracker-authentication-default-rtdb.firebaseio.com/expenseList/${username}.json`, {
             method: "POST",
             body: JSON.stringify(details)
@@ -116,19 +115,19 @@ const AddExpense = (props) => {
         amountRef.current.value = ''
         categoryRef.current.value = ''
         descriptionRef.current.value = ''
-       
         } else {
             console.log(res)
         }
+        window.location.reload();
         dispatch(cartActions.addExpense({
-            expense : details.amount,
-            description : details.description,
-            category : details.category
+            amount : enteredAmount,
+            description : enteredDescription,
+            category : selectedCategory
         }));
     }
 
    
-    const ExpenseCount = useSelector((state) => state.expense.totalExpense)
+  
   return (
     <Fragment>
    <form className={styles.formContainer} onSubmit={addExpenseHandler}>
@@ -159,7 +158,7 @@ const AddExpense = (props) => {
 <button type='submit'>Add Expense</button> 
 { ExpenseCount > 1000 && <button>Buy Premium</button>}
    </form>
-   <ExpenseAdded  items={item} getId={getId}/>
+   <ExpenseAdded  getId={getId}/>
    </Fragment>
   );
 };
