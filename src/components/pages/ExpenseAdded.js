@@ -1,15 +1,22 @@
 import styles from './ExpenseAdded.module.css'
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
+import { cartActions } from "../../store/cartSlice";
 
 const ExpenseAdded = (props) => {
+
+    const dispatch = useDispatch();
 
     const handleClick = (id , isEdit) => {
         props.getId(id , isEdit)
     }
+
+  
  
     
 
     return(<div className={styles.tableContainer}>
+       
       <table>
         <thead>
             <tr>

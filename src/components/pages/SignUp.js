@@ -1,12 +1,15 @@
 import React, {Fragment, useRef} from 'react'
 import "./SignUp.css";
 import {NavLink} from 'react-router-dom'
+import { useDispatch } from "react-redux";
+import { authActions } from "../../store/authSlice";
 
 
 const SignUp = () => {
     let fetchEmailRef = useRef();
     let fetchPasswordRef = useRef();
     let fetchCpasswordRef = useRef();
+    const dispatch = useDispatch();
 
    
 
@@ -15,6 +18,7 @@ const SignUp = () => {
         let enteredEmail = fetchEmailRef.current.value;
         let enteredPassword = fetchPasswordRef.current.value;
         let enteredCpassword = fetchCpasswordRef.current.value;
+        dispatch(authActions.signup(enteredEmail));
          
 if(enteredEmail && enteredPassword && enteredCpassword && enteredPassword === enteredCpassword) {
         fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAdJZauQNFCHPG1PLjvZcjucdQn4HiktL0', {

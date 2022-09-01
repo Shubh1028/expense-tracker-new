@@ -1,12 +1,15 @@
 import React, {Fragment, useRef, useState, useEffect} from 'react'
 import styles from"./AddExpense.module.css";
 import ExpenseAdded from './ExpenseAdded';
+import { useDispatch, useSelector } from "react-redux";
+import { cartActions } from "../../store/cartSlice";
 
 
 const AddExpense = (props) => {
     const amountRef = useRef();
     const descriptionRef = useRef();
     const categoryRef = useRef();
+    const dispatch = useDispatch();
 
     const[item, getDetail] = useState([]);
 
@@ -26,7 +29,6 @@ const AddExpense = (props) => {
 
         const toEdit = (item.find((expense) => expense.key === id));
         if(isEdit) {
-        console.log(toEdit)
         amountRef.current.value = toEdit.amount;
         descriptionRef.current.value = toEdit.description;
         categoryRef.current.value = toEdit.category;
@@ -54,6 +56,7 @@ const AddExpense = (props) => {
         }).catch((err) => {
             console.log(err.message);
         })
+        dispatch(cartActions.removeExpense(id));
     }
 
 
@@ -71,16 +74,27 @@ const AddExpense = (props) => {
         })
         .then((data) => {
             let localItem = [];
+            let localtotalExpense = 0;
             for (let [key, value] of Object.entries(data)) { 
                 localItem.push({ key, ...value });
+                localtotalExpense = localtotalExpense + (+value.amount);
             }
             getDetail(localItem)
+            dispatch(cartActions.replaceExpense({
+                items: localItem || [],
+                totalExpense: localtotalExpense
+            }));
+           
         })
     },[])
+    const count = useSelector(state => state.expense.totalExpense)
 
+    // console.log(count)     
+   
     
 
     const addExpenseHandler = async (e) => {
+      
         e.preventDefault();
         const enteredAmount = amountRef.current.value;
         const selectedCategory = categoryRef.current.value;
@@ -102,11 +116,19 @@ const AddExpense = (props) => {
         amountRef.current.value = ''
         categoryRef.current.value = ''
         descriptionRef.current.value = ''
+       
         } else {
             console.log(res)
         }
+        dispatch(cartActions.addExpense({
+            expense : details.amount,
+            description : details.description,
+            category : details.category
+        }));
     }
 
+   
+    const ExpenseCount = useSelector((state) => state.expense.totalExpense)
   return (
     <Fragment>
    <form className={styles.formContainer} onSubmit={addExpenseHandler}>
@@ -134,7 +156,8 @@ const AddExpense = (props) => {
         <textarea type='text' id='description' placeholder="Enter Description" rows={3} ref={descriptionRef} required/>
     </div>
     <br/>
-    <button type='submit'>Add Expense</button>
+<button type='submit'>Add Expense</button> 
+{ ExpenseCount > 1000 && <button>Buy Premium</button>}
    </form>
    <ExpenseAdded  items={item} getId={getId}/>
    </Fragment>

@@ -1,11 +1,14 @@
 import React, {Fragment, useRef} from 'react'
 import { NavLink, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../store/authSlice";
 import "./SignUp.css";
 // import AuthContext from '../Store/auth-context';
 
 const Login = () => {
     let fetchEmailRef = useRef();
     let fetchPasswordRef = useRef();
+    const dispatch = useDispatch();
  
     const history = useHistory();
 
@@ -13,6 +16,7 @@ const Login = () => {
         e.preventDefault();
         let enteredEmail = fetchEmailRef.current.value;
         let enteredPassword = fetchPasswordRef.current.value;
+      
          
 if(enteredEmail && enteredPassword) {
         fetch('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAdJZauQNFCHPG1PLjvZcjucdQn4HiktL0', {
@@ -33,6 +37,7 @@ if(enteredEmail && enteredPassword) {
             })
                 history.replace('/home')  
               console.log('LoggedIn!!')
+              dispatch(authActions.login(enteredEmail));
               window.location.reload()
             } else {
               return res.json().then(data => {
