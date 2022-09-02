@@ -8,9 +8,10 @@ body {
   /* background-color: black; */
 }
 .dark {
-  background-color: black;
+  background-color: #064e3b;
   /* height: 115vh; */
   padding-bottom: 2rem;
+  min-height: 100vh;
 }
 
 code {
