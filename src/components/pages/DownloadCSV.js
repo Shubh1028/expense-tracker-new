@@ -5,7 +5,6 @@ import { FcDownload } from "react-icons/fc";
 
 const DownloadCSV = (props) => {
     const isActivated = useSelector(state => state.theme.isActivated);
-    const bgColor = useSelector(state => state.theme.bgColor);
     function makeCSV(rows) {
         let main = [["Id", "Category", "Description", "Expense"]];
         for (let i = 0; i < rows.length; i++) {

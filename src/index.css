@@ -9,7 +9,8 @@ body {
 }
 .dark {
   background-color: black;
-  height: 115vh;
+  /* height: 115vh; */
+  padding-bottom: 2rem;
 }
 
 code {
